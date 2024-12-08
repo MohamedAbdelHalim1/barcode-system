@@ -1,12 +1,17 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SizeController;
-use App\Http\Controllers\BarcodeController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemLineController;
+use App\Http\Controllers\SubCategoryController;
 
 
 Route::get('/', function () {
@@ -40,6 +45,12 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users', UserController::class)->only(['index', 'create' , 'store' ,'edit', 'update', 'destroy']);
     });
     Route::resource('sizes', SizeController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('subcategories', SubCategoryController::class);
+    Route::resource('seasons', SeasonController::class);
+    Route::resource('itemlines', ItemLineController::class);
+    Route::resource('colors', ColorController::class);
+
     Route::get('/barcodes', [BarcodeController::class, 'index'])->name('barcodes.index');
     Route::get('/barcodes/create', [BarcodeController::class, 'create'])->name('barcodes.create');
     Route::post('/barcodes', [BarcodeController::class, 'store'])->name('barcodes.store');

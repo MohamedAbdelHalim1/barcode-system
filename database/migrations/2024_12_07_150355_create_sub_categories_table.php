@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barcodes', function (Blueprint $table) {
+        Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('sku')->unique();
-            $table->decimal('price', 10, 2)->nullable();
+            $table->string('key')->unique();
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barcodes');
+        Schema::dropIfExists('sub_categories');
     }
 };

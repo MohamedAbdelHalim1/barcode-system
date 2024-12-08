@@ -21,13 +21,15 @@
         @endif
 
         <a href="{{ route('barcodes.create') }}" class="btn btn-primary mb-3">Create Barcode</a>
+        <!-- Export to CSV Button -->
+        <a href="javascript:void(0);" class="btn btn-secondary mb-3" onclick="exportToCSV()">Export to CSV</a>
+
 
         <table id="barcodesTable" class="table w-full mt-4">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>SKU</th>
-                    <th>Size</th>
                     <th>Price</th>
                     <th>Actions</th>
                 </tr>
@@ -37,7 +39,6 @@
                     <tr id="barcode-{{ $barcode->sku }}">
                         <td>{{ $barcode->title }}</td>
                         <td>{{ $barcode->sku }}</td>
-                        <td>{{ $barcode->size->key ?? 'N/A' }}</td>
                         <td id="price-{{ $barcode->sku }}">{{ $barcode->price ?? 'N/A' }}</td>
                         <td>
                             <!-- Add Price Button -->
@@ -58,6 +59,8 @@
             </tbody>
         </table>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableToCSV/0.1.0/tableToCSV.min.js"></script>
 
     <!-- DataTables Initialization Script -->
     <script type="text/javascript">
@@ -129,6 +132,37 @@
                     alert('Failed to generate barcode.');
                 }
             });
+        }
+
+         // Function to export table data to CSV
+         function exportToCSV() {
+            var table = document.getElementById('barcodesTable');
+            var rows = table.rows;
+            var csv = [];
+
+            // Loop through the rows and extract data
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var rowData = [];
+                
+                // Loop through the columns (cells) in each row
+                for (var j = 0; j < row.cells.length; j++) {
+                    if (j !== 3) { // Skip the last column (Actions column)
+                        rowData.push(row.cells[j].innerText.replace(/,/g, '')); // Remove commas from data
+                    }
+                }
+                csv.push(rowData.join(',')); // Join row data with commas
+            }
+
+            // Create CSV file content
+            var csvContent = csv.join('\n');
+
+            // Create a temporary download link and trigger the download
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvContent);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'barcodes.csv';
+            hiddenElement.click();
         }
     </script>
 </x-app-layout>

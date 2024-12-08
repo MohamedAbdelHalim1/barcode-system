@@ -30,10 +30,21 @@ class SizeController extends Controller
             'key' => 'required|string|max:255|unique:sizes,key', // Validate key
         ]);
 
-        Size::create($request->all());
+        // Get the last inserted size
+        $lastSize = Size::orderBy('id', 'desc')->first();
+
+        // Generate the new value
+        $newValue = $lastSize ? str_pad((int)$lastSize->value + 1, 2, '0', STR_PAD_LEFT) : '01';
+
+        // Create the size with the generated value
+        Size::create([
+            'key' => $request->key,
+            'value' => $newValue,
+        ]);
 
         return redirect()->route('sizes.index')->with('success', 'Size created successfully!');
     }
+
 
     public function edit($id)
     {
@@ -45,6 +56,8 @@ class SizeController extends Controller
     {
         $request->validate([
             'key' => 'required|string|max:255|unique:sizes,key,' . $id, // Validate key
+            'value' => 'required|string|max:255|unique:sizes,value', // Validate value
+
         ]);
 
         $size = Size::findOrFail($id);

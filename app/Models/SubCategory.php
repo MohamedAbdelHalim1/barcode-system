@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Size extends Model
+class SubCategory extends Model
 {
+    protected $table = 'sub_categories';
     protected $fillable = ['key','value'];
-
 }

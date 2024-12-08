@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Size extends Model
+class ItemLine extends Model
 {
     protected $fillable = ['key','value'];
-
 }

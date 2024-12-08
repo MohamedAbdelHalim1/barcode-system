@@ -25,6 +25,21 @@
                                 {{ __('Barcodes') }}
                             </x-nav-link>
                         @endif
+                        <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                            {{ __('Categories') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('subcategories.index')" :active="request()->routeIs('subcategories.*')">
+                            {{ __('SubCategories') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('seasons.index')" :active="request()->routeIs('seasons.*')">
+                            {{ __('Seasons') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('itemlines.index')" :active="request()->routeIs('itemlines.*')">
+                            {{ __('ItemLines') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('colors.index')" :active="request()->routeIs('colors.*')">
+                            {{ __('Colors') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('sizes.index')" :active="request()->routeIs('sizes.*')">
                             {{ __('Sizes') }}
                         </x-nav-link>
